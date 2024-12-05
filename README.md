@@ -20,8 +20,10 @@ jobs:
           prefix: <
           suffix: >
           patterns: |
-            firstname: John
-            lastname: Doe 
+            {
+              "first": "John",
+              "last": "Doe"
+            }
           files: "*/*.txt"
 ```
 
@@ -36,7 +38,3 @@ to
 ```
 My name is John Doe, and John is my firstname
 ```
-
-
-
-
