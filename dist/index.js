@@ -34613,6 +34613,7 @@ function run() {
             const patterns = core.getInput("patterns", { required: true });
             const files = yield (0,out.glob)(core.getInput("files", { required: true, trimWhitespace: true }));
             const mapper = JSON.parse(patterns);
+            console.log("targerting files: ", files);
             for (const file of files) {
                 const content = yield promises_namespaceObject.readFile(file, "utf8");
                 const newContent = replace([prefix, postfix], mapper, content);

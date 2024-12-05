@@ -13,13 +13,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Echo test file
+        run: echo "This is a <first> and <last>" > test.txt
+
       - name: Replace Patterns
         uses: ./
         with:
-          prefix: "$$_"
-          postfix: "_$$"
+          prefix: "<"
+          postfix: ">"
           patterns: |
             {
-              "GAME_BACKEND_URL": "${{ env.GAME_BACKEND_URL }}"
+              "first": "John",
+              "last": "Doe"
             }
-          files: "**/*.json"
+          files: "test.txt"
+
+      - name: cat test file
+        run: cat test.txt

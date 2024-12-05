@@ -14,6 +14,8 @@ async function run() {
 
         const mapper = JSON.parse(patterns);
 
+        console.log("targerting files: ", files);
+
         for (const file of files) {
             const content = await fs.readFile(file, "utf8");
             const newContent = replace([prefix, postfix], mapper, content);
