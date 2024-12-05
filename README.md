@@ -1,15 +1,42 @@
-# yet-another-find-and-repace
+# magic replace action
 
-To install dependencies:
+This is yet another find and replace github action with different favour
 
-```bash
-bun install
+## Usage
+
+```yaml
+name: Replace Action
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: find and replace
+        uses: shad02w/magic-replace-action
+        with:
+          prefix: <
+          suffix: >
+          patterns: |
+            firstname: John
+            lastname: Doe 
+          files: "*/*.txt"
 ```
 
-To run:
+the action will transform following .txt from
 
-```bash
-bun run index.ts
+```
+My name is <firstname> <lastname>, and <firstname> is my firstname
 ```
 
-This project was created using `bun init` in bun v1.1.27. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+to 
+
+```
+My name is John Doe, and John is my firstname
+```
+
+
+
+
