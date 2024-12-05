@@ -1,5 +1,9 @@
-name: 'Yet Another Find and Replace'
-description: 'Replace and find patterns in files with any prefix and suffix'
+name: 'Magic Replace Action'
+description: 'Find and replace patterns in files with any prefix and suffix'
+author: 'Shad02w'
+branding:
+  icon: 'book-open'
+  color: 'yellow'
 inputs:
   prefix: 
     description: 'Prefix for pattern replacement'
