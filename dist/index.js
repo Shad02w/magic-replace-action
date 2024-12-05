@@ -34552,45 +34552,46 @@ module.exports = parseParams
 /******/ }
 /******/ 
 /************************************************************************/
-/******/ /* webpack/runtime/compat get default export */
-/******/ (() => {
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__nccwpck_require__.n = (module) => {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			() => (module['default']) :
-/******/ 			() => (module);
-/******/ 		__nccwpck_require__.d(getter, { a: getter });
-/******/ 		return getter;
-/******/ 	};
-/******/ })();
-/******/ 
-/******/ /* webpack/runtime/define property getters */
-/******/ (() => {
-/******/ 	// define getter functions for harmony exports
-/******/ 	__nccwpck_require__.d = (exports, definition) => {
-/******/ 		for(var key in definition) {
-/******/ 			if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
-/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 			}
-/******/ 		}
-/******/ 	};
-/******/ })();
-/******/ 
-/******/ /* webpack/runtime/hasOwnProperty shorthand */
-/******/ (() => {
-/******/ 	__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ })();
-/******/ 
 /******/ /* webpack/runtime/compat */
 /******/ 
 /******/ if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = new URL('.', import.meta.url).pathname.slice(import.meta.url.match(/^file:\/\/\/\w:/) ? 1 : 0, -1) + "/";
 /******/ 
 /************************************************************************/
 var __webpack_exports__ = {};
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(9999);
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nccwpck_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var fast_glob__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(2485);
-/* harmony import */ var fast_glob__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nccwpck_require__.n(fast_glob__WEBPACK_IMPORTED_MODULE_1__);
+
+// EXTERNAL MODULE: ./node_modules/.pnpm/@actions+core@1.11.1/node_modules/@actions/core/lib/core.js
+var core = __nccwpck_require__(9999);
+// EXTERNAL MODULE: ./node_modules/.pnpm/fast-glob@3.3.2/node_modules/fast-glob/out/index.js
+var out = __nccwpck_require__(2485);
+;// CONCATENATED MODULE: external "node:fs/promises"
+const promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:fs/promises");
+;// CONCATENATED MODULE: ./src/replace/regex.ts
+const escapeCharRegex = /[.*+?^${}()|[\]\\]/g;
+function escapeChar(str) {
+    return str.replace(escapeCharRegex, "\\$&");
+}
+function createRegex([prefix, postfix], mapper) {
+    const keys = Object.keys(mapper).map((key) => escapeChar(key));
+    const union = `${escapeChar(prefix)}(${keys.join("|")})${escapeChar(postfix)}`;
+    return new RegExp(union, "g");
+}
+
+;// CONCATENATED MODULE: ./src/replace/index.ts
+
+/**
+ * Magic replace function
+ */
+function replace([prefix, postfix], mapper, content) {
+    const superRegex = createRegex([prefix, postfix], mapper);
+    return content.replace(superRegex, (_, p) => {
+        if (typeof p !== "string") {
+            throw new Error("Could not match the pattern group");
+        }
+        return mapper[p];
+    });
+}
+
+;// CONCATENATED MODULE: ./src/index.ts
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34602,20 +34603,27 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 };
 
 
+
+
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const prefix = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("prefix", { required: true });
-            const postfix = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("postfix", { required: true });
-            const patterns = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("patterns", { required: true });
-            const files = yield (0,fast_glob__WEBPACK_IMPORTED_MODULE_1__.glob)(_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("files", { required: true, trimWhitespace: true }));
+            const prefix = core.getInput("prefix", { required: true });
+            const postfix = core.getInput("postfix", { required: true });
+            const patterns = core.getInput("patterns", { required: true });
+            const files = yield (0,out.glob)(core.getInput("files", { required: true, trimWhitespace: true }));
             const mapper = JSON.parse(patterns);
+            for (const file of files) {
+                const content = yield promises_namespaceObject.readFile(file, "utf8");
+                const newContent = replace([prefix, postfix], mapper, content);
+                yield promises_namespaceObject.writeFile(file, newContent);
+            }
         }
         catch (e) {
             if (e instanceof Error) {
-                _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(e.message);
+                core.setFailed(e.message);
             }
-            _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed("Unknown error");
+            core.setFailed("Unknown error");
         }
     });
 }
