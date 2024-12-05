@@ -34570,9 +34570,9 @@ const escapeCharRegex = /[.*+?^${}()|[\]\\]/g;
 function escapeChar(str) {
     return str.replace(escapeCharRegex, "\\$&");
 }
-function createRegex([prefix, postfix], mapper) {
+function createRegex([prefix, suffix], mapper) {
     const keys = Object.keys(mapper).map((key) => escapeChar(key));
-    const union = `${escapeChar(prefix)}(${keys.join("|")})${escapeChar(postfix)}`;
+    const union = `${escapeChar(prefix)}(${keys.join("|")})${escapeChar(suffix)}`;
     return new RegExp(union, "g");
 }
 
@@ -34581,8 +34581,8 @@ function createRegex([prefix, postfix], mapper) {
 /**
  * Magic replace function
  */
-function replace([prefix, postfix], mapper, content) {
-    const superRegex = createRegex([prefix, postfix], mapper);
+function replace([prefix, suffix], mapper, content) {
+    const superRegex = createRegex([prefix, suffix], mapper);
     return content.replace(superRegex, (_, p) => {
         if (typeof p !== "string") {
             throw new Error("Could not match the pattern group");
@@ -34609,14 +34609,14 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const prefix = core.getInput("prefix", { required: true });
-            const postfix = core.getInput("postfix", { required: true });
+            const suffix = core.getInput("suffix", { required: true });
             const patterns = core.getInput("patterns", { required: true });
             const files = yield (0,out.glob)(core.getInput("files", { required: true, trimWhitespace: true }));
             const mapper = JSON.parse(patterns);
             console.log("targerting files: ", files);
             for (const file of files) {
                 const content = yield promises_namespaceObject.readFile(file, "utf8");
-                const newContent = replace([prefix, postfix], mapper, content);
+                const newContent = replace([prefix, suffix], mapper, content);
                 yield promises_namespaceObject.writeFile(file, newContent);
             }
         }

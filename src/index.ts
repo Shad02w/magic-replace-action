@@ -6,7 +6,7 @@ import { replace } from "./replace";
 async function run() {
     try {
         const prefix = core.getInput("prefix", { required: true });
-        const postfix = core.getInput("postfix", { required: true });
+        const suffix = core.getInput("suffix", { required: true });
         const patterns = core.getInput("patterns", { required: true });
         const files = await glob(
             core.getInput("files", { required: true, trimWhitespace: true }),
@@ -18,7 +18,7 @@ async function run() {
 
         for (const file of files) {
             const content = await fs.readFile(file, "utf8");
-            const newContent = replace([prefix, postfix], mapper, content);
+            const newContent = replace([prefix, suffix], mapper, content);
             await fs.writeFile(file, newContent);
         }
     } catch (e) {

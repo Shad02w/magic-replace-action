@@ -5,11 +5,11 @@ export function escapeChar(str: string) {
 }
 
 export function createRegex(
-    [prefix, postfix]: [string, string],
+    [prefix, suffix]: [string, string],
     mapper: Record<string, string>,
 ) {
     const keys = Object.keys(mapper).map((key) => escapeChar(key));
 
-    const union = `${escapeChar(prefix)}(${keys.join("|")})${escapeChar(postfix)}`;
+    const union = `${escapeChar(prefix)}(${keys.join("|")})${escapeChar(suffix)}`;
     return new RegExp(union, "g");
 }

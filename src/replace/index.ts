@@ -5,11 +5,11 @@ import type { Mapper } from "./type";
  * Magic replace function
  */
 export function replace(
-    [prefix, postfix]: [string, string],
+    [prefix, suffix]: [string, string],
     mapper: Mapper,
     content: string,
 ) {
-    const superRegex = createRegex([prefix, postfix], mapper);
+    const superRegex = createRegex([prefix, suffix], mapper);
     return content.replace(superRegex, (_, p) => {
         if (typeof p !== "string") {
             throw new Error("Could not match the pattern group");
