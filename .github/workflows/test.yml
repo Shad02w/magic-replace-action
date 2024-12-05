@@ -20,7 +20,7 @@ jobs:
         uses: ./
         with:
           prefix: "<"
-          postfix: ">"
+          suffix: ">"
           patterns: |
             {
               "first": "John",
