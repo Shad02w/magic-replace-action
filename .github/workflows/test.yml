@@ -16,7 +16,5 @@ jobs:
         uses: ./
         with:
           patterns: |
-            {
-              "GAME_BACKEND_URL": "123"
-            }
+            GAME_BACKEND_URL: ${{ env.GAME_BACKEND_URL }}
           files: "**/*.{js,jsx,ts,tsx,html,css}"
