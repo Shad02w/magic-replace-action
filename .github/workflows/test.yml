@@ -13,10 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      
       - name: Replace Patterns
         uses: ./
         with:
+          prefix: "$$_"
+          postfix: "_$$"
           patterns: |
-            GAME_BACKEND_URL: ${{ env.GAME_BACKEND_URL }}
-          files: "**/*.{js,jsx,ts,tsx,html,css}"
+            {
+              "GAME_BACKEND_URL": "${{ env.GAME_BACKEND_URL }}"
+            }
+          files: "**/*.json"

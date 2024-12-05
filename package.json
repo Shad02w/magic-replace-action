@@ -1,18 +1,24 @@
 {
-	"name": "yet-another-find-and-replace",
-	"module": "dist/index.js",
-	"type": "module",
-	"scripts": {
-		"build": "ncc build src/index.ts -o dist"
-	},
-	"dependencies": {
-		"@actions/core": "1.11.1"
-	},
-	"peerDependencies": {
-		"typescript": "^5.0.0"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "1.9.4",
-		"@vercel/ncc": "0.38.3"
-	}
+    "name": "yet-another-find-and-replace",
+    "module": "dist/index.js",
+    "type": "module",
+    "scripts": {
+        "build": "ncc build src/index.ts -o dist",
+        "dev": "ncc build --watch src/index.ts -o dist",
+        "test": "vitest run",
+        "test:watch": "vitest"
+    },
+    "dependencies": {
+        "@actions/core": "1.11.1"
+    },
+    "peerDependencies": {
+        "typescript": "^5.0.0"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "1.9.4",
+        "@types/node": "22.10.1",
+        "@vercel/ncc": "0.38.3",
+        "fast-glob": "3.3.2",
+        "vitest": "2.1.8"
+    }
 }

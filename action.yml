@@ -1,6 +1,12 @@
 name: 'Yet Another Find and Replace'
-description: 'Replace and find patterns in files with pattern $$__KEY__$$'
+description: 'Replace and find patterns in files with any prefix and postfix'
 inputs:
+  prefix: 
+    description: 'Prefix for pattern replacement'
+    required: true
+  postfix: 
+    description: 'Postfix for pattern replacement'
+    required: true
   patterns:
     description: 'JSON string containing key-value pairs for pattern replacement'
     required: true
