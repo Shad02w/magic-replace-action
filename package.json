@@ -1,5 +1,6 @@
 {
     "name": "yet-another-find-and-replace",
+    "version": "0.1.0",
     "module": "dist/index.js",
     "type": "module",
     "scripts": {
@@ -20,5 +21,6 @@
         "@types/node": "22.10.1",
         "@vercel/ncc": "0.38.3",
         "vitest": "2.1.8"
-    }
+    },
+    "packageManager": "pnpm@9.14.4"
 }
