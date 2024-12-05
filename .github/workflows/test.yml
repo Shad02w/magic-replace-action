@@ -8,6 +8,8 @@ on:
 jobs:
   replace-patterns:
     runs-on: ubuntu-latest
+    env:
+      GAME_BACKEND_URL: ${{ vars.GAME_BACKEND_URL }}
     steps:
       - uses: actions/checkout@v4
 
