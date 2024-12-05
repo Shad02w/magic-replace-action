@@ -1,12 +1,14 @@
 {
-  "name": "yet-another-find-and-repace",
-  "module": "index.js",
-  "type": "module",
-  "devDependencies": {
-    "@actions/core": "1.11.1",
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  }
+	"name": "yet-another-find-and-repace",
+	"module": "index.js",
+	"type": "module",
+	"dependencies": {
+		"@actions/core": "1.11.1"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4"
+	}
 }

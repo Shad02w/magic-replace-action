@@ -1,7 +1,14 @@
+import * as core from "@actions/core";
+
 async function run() {
-    console.log('Hello World')
+	try {
+		const patterns = core.getInput("patterns");
+	} catch (e) {
+		if (e instanceof Error) {
+			core.setFailed(e.message);
+		}
+		core.setFailed("Unknown error");
+	}
 }
 
-run()
-
-
+run();
