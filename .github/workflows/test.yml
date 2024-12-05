@@ -1,0 +1,22 @@
+name: Example Pattern Replace Workflow
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  replace-patterns:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      
+      - name: Replace Patterns
+        uses: ./
+        with:
+          patterns: |
+            {
+              "GAME_BACKEND_URL": "123"
+            }
+          files: "**/*.{js,jsx,ts,tsx,html,css}"

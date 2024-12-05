@@ -1,0 +1,13 @@
+name: 'Yet Another Find and Replace'
+description: 'Replace and find patterns in files with pattern $$__KEY__$$'
+inputs:
+  patterns:
+    description: 'JSON string containing key-value pairs for pattern replacement'
+    required: true
+  files:
+    description: 'Glob pattern for files to process'
+    required: true
+    default: '**/*'
+runs:
+  using: 'node20'
+  main: './index.js'
