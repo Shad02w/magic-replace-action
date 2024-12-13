@@ -1,5 +1,5 @@
 {
-    "name": "yet-another-find-and-replace",
+    "name": "@shad02w/magic-replace-action",
     "version": "0.1.0",
     "module": "dist/index.js",
     "type": "module",
