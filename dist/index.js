@@ -34565,32 +34565,62 @@ var core = __nccwpck_require__(9999);
 var out = __nccwpck_require__(2485);
 ;// CONCATENATED MODULE: external "node:fs/promises"
 const promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:fs/promises");
-;// CONCATENATED MODULE: ./src/replace/regex.ts
-const escapeCharRegex = /[.*+?^${}()|[\]\\]/g;
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@shad02w+magic-replace@1.1.0/node_modules/@shad02w/magic-replace/dist/index.js
+// src/regex/index.ts
+var escapeCharRegex = /[.*+?^${}()|[\]\\]/g;
 function escapeChar(str) {
-    return str.replace(escapeCharRegex, "\\$&");
+  return str.replace(escapeCharRegex, "\\$&");
 }
-function createRegex([prefix, suffix], mapper) {
-    const keys = Object.keys(mapper).map((key) => escapeChar(key));
-    const union = `${escapeChar(prefix)}(${keys.join("|")})${escapeChar(suffix)}`;
-    return new RegExp(union, "g");
+function createMatchingRegex([prefix, suffix], mapper) {
+  assertPattern([prefix, suffix]);
+  const keys = Object.keys(mapper).map((key) => escapeChar(key));
+  const union = `${escapeChar(prefix)}(${keys.join("|")})${escapeChar(suffix)}`;
+  return new RegExp(union, "g");
+}
+function createExtractRegex([prefix, suffix]) {
+  assertPattern([prefix, suffix]);
+  const escapedPrefix = escapeChar(prefix);
+  const escapedSuffix = escapeChar(suffix);
+  return new RegExp(
+    `${escapedPrefix}((?:(?!${escapedPrefix}|${escapedSuffix}).)+)${escapedSuffix}`,
+    "g"
+  );
+}
+function assertPattern([prefix, suffix]) {
+  if (prefix.length === 0 && suffix.length === 0) {
+    throw new TypeError("prefix and suffix cannot be empty string");
+  }
+  if (prefix.length === 0) {
+    throw new TypeError("prefix cannot be empty string");
+  }
+  if (suffix.length === 0) {
+    throw new TypeError("suffix cannot be empty string");
+  }
 }
 
-;// CONCATENATED MODULE: ./src/replace/index.ts
-
-/**
- * Magic replace function
- */
+// src/index.ts
 function replace([prefix, suffix], mapper, content) {
-    const superRegex = createRegex([prefix, suffix], mapper);
-    return content.replace(superRegex, (_, p) => {
-        if (typeof p !== "string") {
-            throw new Error("Could not match the pattern group");
-        }
-        return mapper[p];
-    });
+  const superRegex = createMatchingRegex([prefix, suffix], mapper);
+  return content.replace(superRegex, (_, p) => {
+    if (typeof p !== "string") {
+      throw new Error("Could not match the pattern group");
+    }
+    return mapper[p];
+  });
+}
+function extractKeys([prefix, suffix], content) {
+  const superRegex = createExtractRegex([prefix, suffix]);
+  const results = content.matchAll(superRegex);
+  const keys = /* @__PURE__ */ new Set();
+  for (const result of results) {
+    const group = result[1];
+    if (!group) continue;
+    keys.add(group);
+  }
+  return Array.from(keys);
 }
 
+//# sourceMappingURL=index.js.map
 ;// CONCATENATED MODULE: ./src/index.ts
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }

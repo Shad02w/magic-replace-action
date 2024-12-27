@@ -1,12 +1,12 @@
 {
     "compilerOptions": {
+        "target": "ES2015",
+        "module": "Preserve",
         // Enable latest features
         "lib": ["ESNext"],
-        "target": "ES2015",
         "allowJs": true,
 
         // Bundler mode
-        "moduleResolution": "node",
         "verbatimModuleSyntax": true,
 
         // Best practices

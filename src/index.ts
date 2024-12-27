@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
 import { glob } from "fast-glob";
 import * as fs from "node:fs/promises";
-import { replace } from "./replace";
+import { replace } from "@shad02w/magic-replace";
 
 async function run() {
     try {
